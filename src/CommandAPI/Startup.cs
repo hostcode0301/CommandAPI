@@ -25,13 +25,26 @@ namespace CommandAPI
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
-            // Config DB connect
+            // Config DB connect with external secrets details
+            string username = "";
+            string password = "";
+            if (env.IsDevelopment())
+            {
+                username = Configuration["UserId"];
+                password = Configuration["Password"];
+            }
+            else
+            {
+                username = Environment.GetEnvironmentVariable("UserId");
+                password = Environment.GetEnvironmentVariable("Password");
+            }
+
             var builder = new NpgsqlConnectionStringBuilder();
             builder.ConnectionString = Configuration.GetConnectionString("PostgreSql");
-            builder.Username = Configuration["UserId"];
-            builder.Password = Configuration["Password"];
+            builder.Username = username;
+            builder.Password = password;
 
             services.AddDbContext<CommandContext>(opt => opt.UseNpgsql(builder.ConnectionString));
 
