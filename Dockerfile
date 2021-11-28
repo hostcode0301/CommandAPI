@@ -9,14 +9,14 @@ COPY . .
 
 # testing
 FROM build as testing
-WORKDIR /src/CommandAPI
+WORKDIR /src/src/CommandAPI
 RUN dotnet build
-WORKDIR /src/CommandAPI.Tests
+WORKDIR /src/test/CommandAPI.Tests
 RUN dotnet test
 
 # publish
 FROM build AS publish
-WORKDIR /src/CommandAPI
+WORKDIR /src/src/CommandAPI
 RUN dotnet publish -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS final
