@@ -2,8 +2,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 WORKDIR /src
 COPY *.sln .
-COPY test/CommandAPI.Tests/*.csproj CommandAPI.Tests 
-COPY src/CommandAPI/*.csproj CommandAPI/
+COPY test/CommandAPI.Tests/*.csproj test/CommandAPI.Tests/ 
+COPY src/CommandAPI/*.csproj src/CommandAPI/
 RUN dotnet restore
 COPY . .
 
