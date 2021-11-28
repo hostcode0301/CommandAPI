@@ -22,4 +22,4 @@ RUN dotnet publish -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-CMD ASPNETCORE_URLS=http://*:&PORT dotnet CommandAPI.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet CommandAPI.dll
